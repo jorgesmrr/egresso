@@ -233,6 +233,7 @@
 											visible="@load(postagem.imagem ne null)"
 											onCreate="@command('carregarImagem', imagem=self, imgSrc = postagem.tbnail)" />
 									</div>
+									
 								</vlayout>
 							</hlayout>
 							<hlayout width="100%">
@@ -244,7 +245,11 @@
 								<label
 									onCreate="@command('descricaoDataPostagem', dataHora=postagem.dataHora, label=self)"
 									style="font-size:60%;" />
+								
+									
+									
 							</hlayout>
+								<label value="Excluir" style="cursor: pointer;color:#c0504d; " visible="@load(postagem.podeEditar eq true)" onClick="@command('excluirPostagem', postagem = postagem)"/>
 						</vlayout>
 					</template>
 
@@ -297,25 +302,25 @@
 												
 													style="cursor:pointer;width:200px; height:200px; margin-right:20px;"
 													src="@load(aluno.facebookId ne null ? aluno.urlFoto : '/img/anonimo.jpg' )" />
-												<vlayout>
+												<vlayout height="100%" style="width:250px;">
 																
 													<label
-														style="font-weight:bold;" value="@load(aluno.nome)" />
-														<label visible="@load(aluno.atuacao eq null)"  value="Nenhuma informação cadastrada."/>
-													<label visible="@load(aluno.atuacao ne null)"
+														style="font-weight:bold; word-wrap: break-word;" value="@load(aluno.nome)" />
+														<label  visible="@load(aluno.atuacao eq null)"  value="Nenhuma informação cadastrada."/>
+													<label style= "word-wrap: break-word;" visible="@load(aluno.atuacao ne null)"
 														value="@load(aluno.atuacao.tipoAtuacao.id eq 1 ? 'Formação :' : aluno.atuacao.tipoAtuacao.id eq 2 ? 'Projeto :' : 'Cargo :')" />
-													<label 	 visible="@load(aluno.atuacao ne null)"
-														style="font-weight:bold;"
+													<label visible="@load(aluno.atuacao ne null)"
+														style=" word-wrap: break-word;font-weight:bold; sword-wrap: break-word;"
 														value="@load(aluno.atuacao.cargo)" />
-													<label 	 visible="@load(aluno.atuacao ne null)"
+													<label style= "word-wrap: break-word;"	 visible="@load(aluno.atuacao ne null)"
 														value="@load(aluno.atuacao.tipoAtuacao.id eq 1 ? 'Instituição :' : aluno.atuacao.tipoAtuacao.id eq 2 ? 'Local de Desenvolvimento :' : 'Empresa :')" />
 													<label  visible="@load(aluno.atuacao ne null)"
-														style="font-weight:bold;"
+														style="font-weight:bold; style= word-wrap: break-word;"
 														value="@load(aluno.atuacao.local)" />
-													<label 	visible="@load(aluno.atuacao ne null)"
+													<label style= "word-wrap: break-word;"	visible="@load(aluno.atuacao ne null)"
 														value="@load('Desde : ')" />
 													<label  visible="@load(aluno.atuacao ne null)"
-														style="font-weight:bold;"
+														style="font-weight:bold;style= word-wrap: break-word;"
 														value="@load(''.concat(aluno.atuacao.dataInicio)) @converter('br.ufjf.egresso.utils.DateFormatConverter')"/>
 
 												</vlayout>

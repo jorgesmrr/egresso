@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -46,6 +47,15 @@ public class Postagem {
 
 	@Column(name = "data_hora", nullable = false)
 	private Timestamp dataHora;
+	@Transient
+	private boolean podeEditar = false;
+	public boolean isPodeEditar() {
+		return podeEditar;
+	}
+
+	public void setPodeEditar(boolean podeEditar) {
+		this.podeEditar = podeEditar;
+	}
 
 	public Postagem() {
 		super();
@@ -126,5 +136,7 @@ public class Postagem {
 	public void setDataHora(Timestamp dataHora) {
 		this.dataHora = dataHora;
 	}
+
+	
 
 }

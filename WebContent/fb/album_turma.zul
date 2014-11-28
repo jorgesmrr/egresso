@@ -31,15 +31,16 @@
 		
 	</script>
 
-	<div apply="org.zkoss.bind.BindComposer" width="100%" align="center"
+	<div  apply="org.zkoss.bind.BindComposer" width="100%" align="center"
 		style="background-color:#E8E8E8;"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
-		height="100%"
-		onClientInfo="@command('montaTabelaImagens', event=event)">
-		<div
+		height="100%"   onCreate="@command('montaTabelaImagens')" >
+		
+		<div 
+		
 			style="color:white; padding:5px;background-color: #c0504d; width:100%;">
 			<hlayout style="margin-top:5px;margin-bottom:5px;">
-				<div style="width:100%;">
+				<div  style="width:100%;">
 
 
 					<label
@@ -61,7 +62,7 @@
 
 					<template name="children" var="postagem">
 
-						<div
+						<div 
 							style="overflow: hidden;
 	position: relative;background-color:white;border: 1px solid;;width:141px; height: 110px; "
 							visible="@load(postagem.imagem ne null)">
