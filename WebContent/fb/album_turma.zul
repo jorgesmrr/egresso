@@ -14,6 +14,8 @@
 
 
 
+
+
 		
 		<![CDATA[ function voltaTurma(){ location.href = "turma.zul";
 
@@ -26,48 +28,53 @@
 		
 		
 		
+		
+		
 
 		
 		
 	</script>
 
-	<div  apply="org.zkoss.bind.BindComposer" width="100%" align="center"
+	<div apply="org.zkoss.bind.BindComposer" width="100%" align="center"
 		style="background-color:#E8E8E8;"
 		viewModel="@id('vm') @init('br.ufjf.egresso.controller.FbTurmaController')"
-		height="100%"   onCreate="@command('montaTabelaImagens')" >
-		
-		<div 
-		
+		height="100%" onCreate="@command('montaTabelaImagens')">
+
+		<div
 			style="color:white; padding:5px;background-color: #c0504d; width:100%;">
 			<hlayout style="margin-top:5px;margin-bottom:5px;">
-				<div  style="width:100%;">
+				<div style="width:100%;">
 
 
 					<label
 						style="font-size:12px; cursor:pointer; font-weight:bold;margin-left:-815%"
 						value="Voltar para turma" onClick="@command('voltaTurma')" />
 				</div>
-				
+
 			</hlayout>
 		</div>
 		<div style="margin-top:5%;">
-		<label value="Nenhuma imagem postada" visible="@load(empty vm.urlPostagens )"/>
+			<label value="Nenhuma imagem postada"
+				visible="@load(empty vm.urlPostagens )" />
 		</div>
-		<div align="left">
-		<vlayout visible = "@load(vm.urlPostagens ne null)" children="@load(vm.linhasPostagem)"
-			style=" padding:20px; margin-left:100px; margin-bottom:10px ">
-			<template name="children" var="linhaPostagem">
-				<hlayout style="padding:10px;"
-					children="@load(linhaPostagem)">
+		<div align="center">
 
-					<template name="children" var="postagem">
+			<vlayout visible="@load(not empty vm.urlPostagens )"
+				children="@load(vm.linhasPostagem)"
+				style=" padding:20px; margin-left:100px; margin-bottom:10px ">
+				<template name="children" var="linhaPostagem">
+					
+						<hlayout style="padding:10px;"
+							children="@load(linhaPostagem)">
 
-						<div 
-							style="overflow: hidden;
+							<template name="children" var="postagem">
+
+								<div 
+									style="overflow: hidden;
 	position: relative;background-color:white;border: 1px solid;;width:141px; height: 110px; "
-							visible="@load(postagem.imagem ne null)">
-							<image
-								style="cursor:pointer;position: absolute;
+									visible="@load(postagem.imagem ne null)">
+									<image
+										style="cursor:pointer;position: absolute;
 left: -100%;
 	right: -100%;
 	top: -100%;
@@ -75,20 +82,19 @@ left: -100%;
 	margin: auto;
 	min-height: 50%;
 	min-width: 50%;"
-								onClick="@command('verImagem',window = imagem, imgSrc = postagem.imagem )"
-								visible="@load(postagem.imagem ne null)"
-								onCreate="@command('carregarImagem', imagem=self, imgSrc = postagem.tbnail)" />
-						</div>
-					</template>
-				</hlayout>
-			</template>
+										onClick="@command('verImagem',window = imagem, imgSrc = postagem.imagem )"
+										visible="@load(postagem.imagem ne null)"
+										onCreate="@command('carregarImagem', imagem=self, imgSrc = postagem.tbnail)" />
+								</div>
+							</template>
+						</hlayout>
+				</template>
 
-		</vlayout>
+			</vlayout>
 		</div>
 	</div>
 	<window id="imagem" title="Visualizar Imagem" visible="false"
-		style="max-width:700px;height:auto;" border="normal"
-		closable="true"
+		style="max-width:700px;height:auto;" border="normal" closable="true"
 		onClose="self.setVisible(false); event.stopPropagation();">
 		<image style="max-width:100%; max-height:100%" />
 	</window>

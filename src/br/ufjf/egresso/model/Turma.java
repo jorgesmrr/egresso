@@ -33,7 +33,17 @@ public class Turma {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "turma")
 	private List<Aluno> alunos = new ArrayList<Aluno>();
-	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "curso_id", nullable = false)
+	private Curso curso;
+
+	public Curso getCurso() {
+		return curso;
+	}
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
 
 	@Transient
 	private boolean editingStatus;

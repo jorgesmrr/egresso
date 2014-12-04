@@ -6,14 +6,17 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zul.Window;
 
+import br.ufjf.egresso.model.Administrador;
 import br.ufjf.egresso.model.Aluno;
 
 public class MenuController {
 	private Aluno aluno;
-
+	private Administrador admin;
 	@Init
 	public void init() {
 		aluno = (Aluno) Sessions.getCurrent().getAttribute("aluno");
+		admin =(Administrador) Sessions.getCurrent().getAttribute("admin");
+		System.out.println(admin.getNome());
 	}
 
 	public Aluno getAluno() {

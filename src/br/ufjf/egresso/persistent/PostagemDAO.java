@@ -49,12 +49,12 @@ public class PostagemDAO extends GenericoDAO {
 	 * caso não exista nenhuma {@link Postagem}
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Postagem> getPostagens(Turma turma, Curso curso) {
+	public List<Postagem> getPostagens(Turma turma) {
 		try {
 			Query query = getSession().createQuery(
-					"SELECT p FROM Postagem AS p WHERE p.turma = :turma AND p.aluno.curso = :curso ORDER BY data_hora DESC ");
+					"SELECT p FROM Postagem AS p WHERE p.turma = :turma  ORDER BY data_hora DESC ");
 			query.setParameter("turma", turma);
-			query.setParameter("curso", curso);
+			
 			List<Postagem> postagens = query.list();
 			getSession().close();
 

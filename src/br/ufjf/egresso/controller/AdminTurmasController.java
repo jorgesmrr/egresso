@@ -2,18 +2,22 @@ package br.ufjf.egresso.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Init;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import br.ufjf.egresso.business.TurmaBusiness;
+import br.ufjf.egresso.model.Administrador;
 import br.ufjf.egresso.model.Turma;
 /**
  * Classe que controla a página gerencia_turmas.zul
@@ -24,10 +28,19 @@ public class AdminTurmasController {
 	private TurmaBusiness turmaBusiness = new TurmaBusiness();
 	private Turma novaTurma = new Turma();
 	private Map<Integer, Turma> editTemp = new HashMap<Integer, Turma>();
-	private List<Turma> todasTurmas = turmaBusiness.getTodas();
-	private List<Turma> filterTurmas = todasTurmas;
+	private List<Turma> todasTurmas;
+	private List<Turma> filterTurmas;
 	private String filterInt;
+	private Administrador admin;
+	@Init
+	public void init() {
 
+		admin = ((Administrador) Sessions.getCurrent().getAttribute("admin"));
+		todasTurmas =  turmaBusiness.getTodasCurso(admin.getCurso());
+		filterTurmas = todasTurmas;
+		
+
+	}
 	public List<Turma> getFilterTurmas() {
 		return filterTurmas;
 	}
@@ -185,6 +198,7 @@ public class AdminTurmasController {
 
 	@Command
 	public void submitTurma(@BindingParam("window") final Window window) {
+		novaTurma.setCurso(admin.getCurso());
 		if (turmaBusiness.validar(novaTurma)) {
 			if (turmaBusiness.salvar(novaTurma)) {
 				todasTurmas.add(novaTurma);

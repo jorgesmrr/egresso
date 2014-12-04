@@ -71,8 +71,8 @@ public class PostagemBusiness {
 	 *            Turma das {@link Postagem}s a serem obtidas.
 	 * @return Uma {@link List} de {@link Postagem}.
 	 */
-	public List<Postagem> getPostagens(Turma turma, Curso curso) {
-		return postagemDao.getPostagens(turma, curso);
+	public List<Postagem> getPostagens(Turma turma) {
+		return postagemDao.getPostagens(turma);
 	}
 
 }

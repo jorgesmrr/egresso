@@ -3,6 +3,7 @@ package br.ufjf.egresso.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufjf.egresso.model.Curso;
 import br.ufjf.egresso.model.Turma;
 import br.ufjf.egresso.persistent.TurmaDAO;
 
@@ -107,6 +108,10 @@ public class TurmaBusiness {
 	public Turma getTurma(int ano, int semestre) {
 		return turmaDao.getTurma(ano, semestre);
 	}
+	public Turma getTurmaCurso(int ano, int semestre, Curso curso) {
+		return turmaDao.getTurmaCurso(ano, semestre, curso);
+	}
+	
 
 	/**
 	 * Retorna todas as turmas de determinado ano.
@@ -116,6 +121,9 @@ public class TurmaBusiness {
 	 */
 	public List<Turma> getTurmas(int ano) {
 		return turmaDao.getTurmas(ano);
+	}
+	public List<Turma> getTodasCurso(Curso curso) {
+		return new TurmaDAO().getTodasCurso(curso);
 	}
 
 }

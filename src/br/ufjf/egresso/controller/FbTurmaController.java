@@ -172,8 +172,7 @@ public class FbTurmaController {
 		alunos = new AlunoBusiness().getTodosCurso(aluno.getCurso());
 
 		todosAlunos = new AlunoBusiness().getTodos();
-		postagensTurma = new PostagemBusiness().getPostagens(turma,
-				aluno.getCurso());
+		postagensTurma = new PostagemBusiness().getPostagens(turma);
 		urlPostagens = new ArrayList<String>();
 		for (int i = 0; i < postagensTurma.size(); i++) {
 			if (postagensTurma.get(i).getImagem() != null)
@@ -182,6 +181,11 @@ public class FbTurmaController {
 				postagensTurma.get(i).setPodeEditar(true);
 			}
 		}
+		/*
+		 * for(String s : urlPostagens){
+		 * 
+		 * System.out.println(s); }
+		 */
 
 	}
 
@@ -278,28 +282,25 @@ public class FbTurmaController {
 	}
 
 	public void removeFromList(Postagem postagem) {
-		
 
-			postagensTurma.remove(postagem);
-			BindUtils.postNotifyChange(null, null, this, "postagensTurma");
+		postagensTurma.remove(postagem);
+		BindUtils.postNotifyChange(null, null, this, "postagensTurma");
 
-		
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Command
-	public void excluirPostagem(@BindingParam("postagem") final Postagem postagem) {
+	public void excluirPostagem(
+			@BindingParam("postagem") final Postagem postagem) {
 		Messagebox.show("Você tem certeza que deseja excluir a postagem "
 				+ postagem.getTexto() + "?", "Confirmação", Messagebox.OK
 				| Messagebox.CANCEL, Messagebox.QUESTION,
 				new org.zkoss.zk.ui.event.EventListener() {
 					public void onEvent(Event e) {
 						if (Messagebox.ON_OK.equals(e.getName())) {
-							
-							if (new PostagemBusiness().exclui(postagem)) 
-								removeFromList(postagem);
 
-							
+							if (new PostagemBusiness().exclui(postagem))
+								removeFromList(postagem);
 
 						}
 					}
@@ -382,7 +383,7 @@ public class FbTurmaController {
 		if (linhaAluno.size() > 0)
 			linhasAluno.add(linhaAluno);
 
-		BindUtils.postNotifyChange(null, null, this, "postagensTurma");
+		// BindUtils.postNotifyChange(null, null, this, "postagensTurma");
 		BindUtils.postNotifyChange(null, null, this, "linhasAluno");
 	}
 
@@ -400,18 +401,20 @@ public class FbTurmaController {
 	 * @param evt
 	 *            evento disparado pelo ator
 	 */
+
 	@Command
 	public void montaTabelaImagens() {
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		double largura = screenSize.getWidth();
-		double altura = screenSize.getHeight() - 200;
 		/*
 		 * if (evt != null) { largura = evt.getDesktopWidth(); altura =
 		 * evt.getDesktopHeight() - 200;
+		 * 
+		 * 
+		 * }
 		 */
+		largura = 1000;
+		altura = 500;
 		BindUtils.postNotifyChange(null, null, this, "largura");
 		BindUtils.postNotifyChange(null, null, this, "altura");
-
 		int inseridos = 0;
 		linhasPostagem = new ArrayList<List<Postagem>>();
 
@@ -667,22 +670,24 @@ public class FbTurmaController {
 		Clients.evalJavaScript("fadeOut()");
 		if (turmaSelecionada != null && cursoSelecionado != null) {
 
-			turma = turmaBusiness.getTurma(Integer.parseInt(turmaSelecionada
-					.substring(0, turmaSelecionada.indexOf(" "))), Integer
+			turma = turmaBusiness.getTurmaCurso(Integer
+					.parseInt(turmaSelecionada.substring(0,
+							turmaSelecionada.indexOf(" "))), Integer
 					.parseInt(turmaSelecionada.substring(
 							turmaSelecionada.indexOf("º") - 1,
-							turmaSelecionada.indexOf("º"))));
+							turmaSelecionada.indexOf("º"))), cursoSelecionado);
 			// monta a string de descrição de turma com base nos dados da turma
 			// retornada
-			descricao = "Turma do " + turma.getSemestre() + "º semestre de "
-					+ turma.getAno();
-			System.out.println(cursoSelecionado.getCurso());
-			filtraAlunos = new AlunoBusiness().getAlunosCurso(turma,
-					cursoSelecionado);
-			postagensTurma = new PostagemBusiness().getPostagens(turma,
-					cursoSelecionado);
-			montaTabela(null);
-			BindUtils.postNotifyChange(null, null, this, "descricao");
+			if (turma != null) {
+				descricao = "Turma do " + turma.getSemestre()
+						+ "º semestre de " + turma.getAno();
+				System.out.println(cursoSelecionado.getCurso());
+				filtraAlunos = new AlunoBusiness().getAlunosCurso(turma,
+						cursoSelecionado);
+				postagensTurma = new PostagemBusiness().getPostagens(turma);
+				montaTabela(null);
+				BindUtils.postNotifyChange(null, null, this, "descricao");
+			}
 		}
 	}
 

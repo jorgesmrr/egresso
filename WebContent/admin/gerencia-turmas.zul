@@ -71,7 +71,7 @@
 				</columns>
 				<rows>
 					<row>
-						<label value="Semestre:" />
+						<label value="Ano" />
 						<textbox
 							value="@load(vm.novaTurma.ano)@save(vm.novaTurma.ano, before='submitTurma')"
 							tabindex="1" id="ano" width="100%" />
@@ -79,7 +79,7 @@
 					<row>
 						<label value="Semestre:" />
 						<textbox
-							value="@load(vm.novaTurma.semestre)@save(vm.novaTurma.ano, before='submitTurma')"
+							value="@load(vm.novaTurma.semestre)@save(vm.novaTurma.semestre, before='submitTurma')"
 							tabindex="1" id="semestre" width="100%" />
 					</row>
 				</rows>

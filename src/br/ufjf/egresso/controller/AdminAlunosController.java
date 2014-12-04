@@ -31,7 +31,7 @@ public class AdminAlunosController {
 	private Map<Integer, Aluno> editTemp = new HashMap<Integer, Aluno>();
 	private List<Aluno> todosAlunos;
 	private List<Aluno> filterAlunos;
-	private List<Turma> turmas = new TurmaBusiness().getTodas();
+	private List<Turma> turmas;
 	private String filterString = "";
 	private List<String> semestres = new ArrayList<String>();
 	private Aluno novoAluno;
@@ -45,6 +45,7 @@ public class AdminAlunosController {
 		admin = ((Administrador) Sessions.getCurrent().getAttribute("admin"));
 		filterAlunos = todosAlunos = alunoBusiness.getTodosCurso(admin
 				.getCurso());
+		turmas = new TurmaBusiness().getTodasCurso(admin.getCurso());
 		anos = new HashSet<Integer>();
 
 		System.out.println(admin.getCurso().getCodCurso());
@@ -167,12 +168,24 @@ public class AdminAlunosController {
 		else {
 			if (sem == -1)
 				Messagebox
-						.show("Por favor, informe o semestre em que você ingressou no curso.",
+						.show("Por favor, informe o semestre em que o aluno ingressou no curso.",
 								"Erro", Messagebox.OK, Messagebox.ERROR);
 
 			else {
-				novoAluno.setTurma(new TurmaBusiness().getTurma(
-						Integer.parseInt(ano), sem + 1));
+				novoAluno.setTurma(new TurmaBusiness().getTurmaCurso(
+						Integer.parseInt(ano), sem + 1, admin.getCurso()));
+				if(novoAluno.getTurma() == null){
+					TurmaBusiness turmabusiness = new TurmaBusiness();
+					Turma turma = new Turma();
+					turma.setCurso(admin.getCurso());
+					turma.setAno(Integer.parseInt(ano));
+					turma.setSemestre(sem+1);
+					if(turmabusiness.validar(turma)){
+						turmabusiness.salvar(turma);
+						novoAluno.setTurma(turma);
+					}
+					
+				}
 			}
 
 			novoAluno.setCurso(admin.getCurso());
